@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'screens/home_screen.dart';
+
+void main() {
+  runApp(
+    const ProviderScope(
+      child: SignLanguageApp(),
+    ),
+  );
+}
+
+class SignLanguageApp extends StatelessWidget {
+  const SignLanguageApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Sign Language Translator',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}

@@ -1,0 +1,48 @@
+// Move buildscript block here
+buildscript {
+    ext.kotlin_version = '1.9.0' // Add Kotlin version if you're using Kotlin
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Update the Android Gradle Plugin (AGP) version to 8.2.1 or higher
+        classpath 'com.android.tools.build:gradle:8.1.2'
+        // If you're using Kotlin, add the Kotlin Gradle plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.2'
+    }
+}
+
+
+// Allprojects block
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Root project configuration
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    afterEvaluate { subproject ->
+        if (subproject.hasProperty('android')) {
+            subproject.android {
+                buildFeatures {
+                    buildConfig = true
+                }
+            }
+        }
+    }
+}
+
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+// Clean task
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
